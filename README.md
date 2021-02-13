@@ -46,8 +46,8 @@ The kata uses composer to install:
 
 ## Testing
 
-PHPUnit is pre-configured to run tests. PHPUnit can be run using a composer script. To run the unit tests, from the root
-of the PHP code run:
+PHPUnit has been configured to run tests. PHPUnit can be run using a composer script. To run the unit tests, from the
+root of the PHP code run:
 
 ```shell script
 composer test
@@ -65,12 +65,25 @@ pu
 For convenience a Dockerfile, docker-composer.yml and Make file have been created. To run the above commands:
 
 ```sh
-make php8-cli composer install
-make php8-cli composer test
+make composer-install
+make test
 ```
 
-To demonstrate this package will not run on PHP7, the following command can be run:
+To demonstrate this demo will not run on PHP7, the following command can be run:
 
 ```sh
-docker run -u $(id -u):$(id -g) -v $(pwd):/app -w /app -it --rm php:7.4-cli-alpine3.12 ./vendor/bin/phpunit
+docker run -u $(id -u):$(id -g) -v $(pwd):/app -w /app -it --rm \
+  php:7.4-cli-alpine3.12 ./vendor/bin/phpunit
+```
+
+An error like:
+
+```text
+Fatal error: Uncaught ParseError: syntax error, unexpected ':', expecting ')' in /app/tests/HelloWorldTest.php:14
+```
+
+Or:
+
+```text
+Fatal error: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.0.0". You are running 7.4.14. in /app/vendor/composer/platform_check.php on line 24
 ```
